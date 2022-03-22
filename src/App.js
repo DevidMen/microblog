@@ -1,16 +1,14 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
-import CreateTweet from './CreateTweet';
-import TweetList from './TweetList';
 import { useState } from "react";
 import {useEffect} from 'react'
-import NavBar from './NavBar';
+import NavBar from './Components/NavBar';
 import {
-  BrowserRouter,
   Routes,
   Route,
 } from "react-router-dom";
-import Profile from './Profile';
+import Profile from './Pages/Profile';
+import Home from './Pages/Home'
 
 function App() {
 
@@ -38,7 +36,7 @@ function App() {
     if(tweetUsername){
      setTweetUsername(tweetUsername)
     }
-})
+},[])
 
 
   async function renderTweet(value, setTweetText, setdisabledBtn){
@@ -73,27 +71,15 @@ function App() {
     <NavBar/>
     <div className='container'>
 
-    <BrowserRouter>
+    
     <Routes>
 
-      <Route path="/" element={<>
-        <CreateTweet 
-        renderTweet={renderTweet}
-        spinner = {spinner}
-        errorMessage = {errorMessage}/>
-        
-        <div className='tweetList'>
-          {tweetList.map((element => <TweetList 
-           element = {element}
-           key = {element.id}  
-           />))}
-       </div> 
-      </>} />
+      <Route path="/" element={<Home renderTweet={renderTweet} tweetList = {tweetList} spinner={spinner} errorMessage={errorMessage}/>}/>
 
-        <Route path="/Profile" element={<Profile />} />
+        <Route path="/profile" element={<Profile />} />
   
     </Routes>
-  </BrowserRouter>
+  
 
 </div>
 </div>
