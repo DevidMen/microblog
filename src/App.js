@@ -1,16 +1,16 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css'
-import CreateTweet from './CreateTweet';
-import TweetList from './TweetList';
+import './Components/App.css'
+import CreateTweet from './Components/CreateTweet';
+import TweetList from './Components/TweetList';
 import { useState } from "react";
 import {useEffect} from 'react'
-import NavBar from './NavBar';
+import NavBar from './Components/NavBar';
 import {
   BrowserRouter,
   Routes,
   Route,
 } from "react-router-dom";
-import Profile from './Profile';
+import Profile from './Components/Profile';
 
 function App() {
 
