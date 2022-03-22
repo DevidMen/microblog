@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css'
+import './Components/App.css'
 import { useState } from "react";
 import {useEffect} from 'react'
 import NavBar from './Components/NavBar';
@@ -36,7 +36,7 @@ function App() {
     if(tweetUsername){
      setTweetUsername(tweetUsername)
     }
-},[])
+},[tweetUsername])
 
 
   async function renderTweet(value, setTweetText, setdisabledBtn){
