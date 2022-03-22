@@ -19,9 +19,9 @@ function Profile(){
            </form>
            <div className='buttondiv'>
 
-           <button onClick={ () => localStorage.setItem(
+           <button onClick={ () =>  localStorage.setItem(
            'react-tweet-username',
-           JSON.stringify(tweetUsername))}  className='button'> Save </button>
+           JSON.stringify(tweetUsername) ,setTweetUsername('')) }  className='button'> Save </button>
            </div>
         </div>
         </div>

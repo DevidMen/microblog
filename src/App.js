@@ -28,21 +28,27 @@ function App() {
     fetchData()
 
   }, [])
-  
-  useEffect(() => {
+  setInterval(() => {name()
+    
+  }, 500);
+
+  function name(){
     const tweetUsername = JSON.parse(
-        localStorage.getItem('react-tweet-username')
-    )
-    if(tweetUsername){
-     setTweetUsername(tweetUsername)
-    }
+      localStorage.getItem('react-tweet-username')
+  )
+  if(tweetUsername){
+   setTweetUsername(tweetUsername)
+   }
+  }
+   useEffect(() => {
+   name()
 },[tweetUsername])
 
 
   async function renderTweet(value, setTweetText, setdisabledBtn){
     setdisabledBtn(true)
     setSpinner(true)
-   const requestOptions = await {
+   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({  content: value, userName: tweetUsername, date: date()})
