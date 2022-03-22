@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Corinthia&family=Meow+Script&family=Mina&family=Murecho:wght@300&family=Oi&family=Poppins:wght@300;500&family=Roboto:wght@300&display=swap');
+
+body{
+  background-color: #15202B;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+}
+form{
+  display: flex;
+  flex-direction: column;
+  padding:30px;
+  border: 1px solid white;
+  position: relative;
+  border-radius: 4px;
+
+}
+.container {
+  width: 70%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 15px;
+  padding-left: 15px;
+  min-height: 100vh;
+  margin-top: 45px;
+}
+.tweetHeader{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #6C757D;
+}
+#button{
+  box-sizing: border-box;
+  border-radius: 4px;
+  font-size: 16px;
+  resize: none;
+  width: 100px;
+  margin-left: 85%;
+  background-color: #007BFF;
+  border: none;
+  padding: 10px;
+  color: white;
+}
+
+.tweet {
+  background-color: #343A40;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+textarea{
+      width: 100%;
+      height: 150px;
+      background-color: #15202B;
+      border: none;
+      resize: none;
+      color: white;
+      outline: none;
+}
+::placeholder{
+  color: #CCCCCC;
+  font-family: 'Roboto', sans-serif;
+}
+.errorMessage{
+  background-color: #F5C6CB;
+  color: #721C24;
+  max-width: fit-content;
+  position: absolute;
+  top: 75%;
+}
+.navbar{
+  display: flex;
+  justify-content: center;
+}
+.navbarUl{
+  padding: 10px;
+  position: fixed;
+  top: 0;
+  width: 85%;
+  list-style-type: none;
+  flex-flow:  nowrap;
+  display: flex;
+  background-color: #343A40; ;
+  z-index: 9;  
+}
+  a{
+    color: #6C757D;
+    padding: 10px;
+    list-style-type: none;
+    font-size: medium;
+    text-decoration: none;
+  }
+  
