@@ -17,7 +17,9 @@ return (
             ? <div className='errorMessage'>
           The tweet can't contain more then 140 chars</div>
             : ""}
+            <div className='buttondiv'>
         <button disabled= {tweetText.length > 140 || 0 ? true : disabledBtn} onClick={ () => renderTweet(tweetText, setTweetText,setdisabledBtn ) } id="button">Tweet</button>
+            </div>
       </form>
       
       {errorMessage.length>0?<h1 className="alert alert-primary">{errorMessage}</h1>:""}

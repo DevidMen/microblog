@@ -92,4 +92,32 @@ textarea{
     font-size: medium;
     text-decoration: none;
   }
+  h3{
+    margin-top: 20px;
+  }
   
+  input{
+    background-color: #15202B;
+    border: none;
+    resize: none;
+    color: white;
+    outline: none;
+  }
+  .button{
+    box-sizing: border-box;
+    border-radius: 4px;
+    font-size: 16px;
+    resize: none;
+    width: 100px;
+    margin-left: 88%;
+    background-color: #007BFF;
+    border: none;
+    color: white;
+    margin-top: 10px;
+  }
+  a:active{
+    color: white;
+  }
+  .buttondiv{
+    display: flex;
+  }
