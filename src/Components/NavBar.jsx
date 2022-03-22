@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 import './App.css'
 
 
@@ -6,8 +7,8 @@ import './App.css'
     return (
        <div className='navbar'>
            <ul className='navbarUl'>
-               <li className='navbarLi'><a href='/'>Home</a></li>
-               <li className='navbarLi'><a href='/Profile'>Profile</a></li>
+               <li className='navbarLi'><Link to="/">Home</Link> </li>
+               <li className='navbarLi'><Link to="/profile">Profile</Link></li>
            </ul>
        </div>
     );
