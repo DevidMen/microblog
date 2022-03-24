@@ -10,7 +10,7 @@ function Home(props) {
 
     return (
         <MyContext.Consumer>
-            {({ tweetList, renderTweet }) => (
+            {({ tweetList }) => (
                 <div>
                     <CreateTweet
 
