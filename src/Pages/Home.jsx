@@ -1,27 +1,31 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CreateTweet from '../Components/CreateTweet';
+import MyContext from '../Components/Mycontext';
 import TweetList from '../Components/TweetList';
 
 
-function Home(props){
+function Home(props) {
 
-const {renderTweet, spinner, errorMessage, tweetList} = props
+    const { loading, errorMessage } = props
 
-    return(
-        <div>
+    return (
+        <MyContext.Consumer>
+            {({ tweetList, renderTweet }) => (
+                <div>
+                    <CreateTweet
 
-        <CreateTweet 
-        renderTweet={renderTweet}
-        spinner = {spinner}
-        errorMessage = {errorMessage}/>
-        
-        <div className='tweetList'>
-          {tweetList.map((element => <TweetList 
-           element = {element}
-           key = {element.id}  
-           />))}
-       </div> 
-       </div>
+                        loading={loading}
+                        errorMessage={errorMessage} />
+
+                    <div className='tweetList'>
+                        {tweetList.map((element => <TweetList
+                            element={element}
+                            key={element.id}
+                        />))}
+                    </div>
+                </div>
+            )}
+        </MyContext.Consumer>
     )
 }
 export default Home;

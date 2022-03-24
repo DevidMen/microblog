@@ -2,8 +2,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {useState} from 'react'
 
 function Profile(){
-    const [tweetUsername , setTweetUsername] = useState('')
 
+    const [tweetName, setTweetname] = useState('')
+  
+   
 
     return (
         <div>
@@ -13,15 +15,15 @@ function Profile(){
                 User Name
             </h3>
         </div>
-        <div>
+        <div>  
         <form >
-               <input onChange={(e) => setTweetUsername(e.target.value)} value={tweetUsername} placeholder={tweetUsername}></input>
+               <input onChange={(e) => setTweetname(e.target.value)} value={tweetName} ></input>
            </form>
            <div className='buttondiv'>
 
            <button onClick={ () =>  localStorage.setItem(
            'react-tweet-username',
-           JSON.stringify(tweetUsername) ,setTweetUsername('')) }  className='button'> Save </button>
+           JSON.stringify(tweetName),setTweetname('') ) } className='button'> Save </button>
            </div>
         </div>
         </div>

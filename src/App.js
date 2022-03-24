@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Components/App.css'
 import { useState } from "react";
-import {useEffect} from 'react'
+import { useEffect } from 'react'
 import NavBar from './Components/NavBar';
 import {
   Routes,
@@ -9,86 +9,109 @@ import {
 } from "react-router-dom";
 import Profile from './Pages/Profile';
 import Home from './Pages/Home'
+import MyContext from './Components/Mycontext';
+import { v4 as uuidv4 } from "uuid";
 
 function App() {
 
+  const [tweetUsername, setTweetUsername] = useState('')
   const [tweetList, setTweetList] = useState([])
-  const [spinner, setSpinner] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [errorMessage, setErrorMessage] = useState("")
-  const [tweetUsername , setTweetUsername] = useState('')
 
-    const fetchData = async () => {
-      setSpinner(true)
-      const response = await fetch(`https://micro-blogging-dot-full-stack-course-services.ew.r.appspot.com/tweet`);
-      const data = await response.json();
-      setTweetList(data.tweets)
-      setSpinner(false)
-    }
+
+  const fetchData = async () => {
+    setLoading(false)
+    const response = await fetch(`https://micro-blogging-dot-full-stack-course-services.ew.r.appspot.com/tweet`);
+    const data = await response.json();
+    setTweetList(data.tweets)
+  }
+
+
   useEffect(() => {
     fetchData()
 
   }, [])
-  setInterval(() => {name()
-    
-  }, 500);
 
-  function name(){
+  function updateUser(){
+    
     const tweetUsername = JSON.parse(
       localStorage.getItem('react-tweet-username')
-  )
-  if(tweetUsername){
-   setTweetUsername(tweetUsername)
-   }
+    )
+    if (tweetUsername) {
+      setTweetUsername(tweetUsername)
+    }
   }
-   useEffect(() => {
-   name()
-},[tweetUsername])
+
+  useEffect(() => {
+    updateUser()
+  }, )
 
 
-  async function renderTweet(value, setTweetText, setdisabledBtn){
+
+  async function renderTweet(value, setTweetText, setdisabledBtn) {
+    updateUser()
+    setTweetUsername(tweetUsername)
     setdisabledBtn(true)
-    setSpinner(true)
-   const requestOptions = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({  content: value, userName: tweetUsername, date: date()})
-  };
+    setLoading(true)
+
+
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content: value, userName: tweetUsername, date: date() })
+    };
     const response = await fetch(`https://micro-blogging-dot-full-stack-course-services.ew.r.appspot.com/tweet`, requestOptions);
     const data = await response.json();
-    if(!response.ok){
+    setLoading(false)
+    if (!response.ok) {
       setErrorMessage(data.message)
     }
-    else{
+    else {
       setErrorMessage("")
     }
-    fetchData()
-    setSpinner(false)
+    const newtweet = [{ id: uuidv4(), content: value, userName: tweetUsername, date: date() }].concat(tweetList)
+    setTweetList(newtweet)
+    setLoading(false)
     setdisabledBtn(false)
     setTweetText("")
   }
-  function date(){
+  useEffect(() => {
+    setLoading(true)
+    const interval = setInterval(() => fetchData()
+      , 3000)
+    return () => {
+      clearInterval(interval)
+    }
+  }, [])
+
+  function date() {
     const today = new Date();
     const date = today.toISOString()
     return date
-    }
+  }
+
+
 
   return (
-<div>
-    <NavBar/>
-    <div className='container'>
+    <div>
+      <NavBar />
+      <div className='container'>
+ 
+        <MyContext.Provider value={{
+          tweetList, renderTweet,setTweetUsername,tweetUsername
+        }}>
+          <Routes>
 
-    
-    <Routes>
+            <Route path="/" element={<Home loading={loading} errorMessage={errorMessage} />} />
 
-      <Route path="/" element={<Home renderTweet={renderTweet} tweetList = {tweetList} spinner={spinner} errorMessage={errorMessage}/>}/>
+            <Route path="/profile" element={<Profile  />} />
 
-        <Route path="/profile" element={<Profile />} />
-  
-    </Routes>
-  
+          </Routes>
+        </MyContext.Provider>
 
-</div>
-</div>
+      </div>
+    </div>
   )
 }
 
