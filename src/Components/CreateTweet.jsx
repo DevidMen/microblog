@@ -1,31 +1,62 @@
-import React from 'react';
+
 import './App.css'
-import { useState } from "react";
-import MyContext from '../Components/Mycontext';
+import { useState,useEffect } from "react";
+import { addDoc, collection}  from 'firebase/firestore'
+import {db, auth} from '../Firebase-config'
+
+
 
 
 function CreateTweet(props) {
 
-  const { loading, errorMessage } = props
+  const {errorMessage } = props
   const [tweetText, setTweetText] = useState('')
   const [disabledBtn, setdisabledBtn] = useState(false)
+  const [tweetUsername, setTweetUsername] = useState('')
+  const [loading, setLoading] = useState(false)
+  
+
+ 
+  const tweetCollection = collection(db, "twitter")
+
+
+  const createTweet = async () => {
+    setLoading(true)
+      await addDoc(tweetCollection, {tweetText, date: date(), name: tweetUsername||auth.currentUser.displayName || auth.currentUser.email, key: auth.currentUser.uid, imm: auth.currentUser.photoURL })
+      setTweetText('')
+      setLoading(false)
+  }
+  
+  function date() {
+    const today = new Date();
+    const date = today.toISOString()
+    return date
+  }
+  function updateUser(){
+    
+    const tweetUsername = JSON.parse(
+      localStorage.getItem('react-tweet-username')
+    )
+    if (tweetUsername) {
+      setTweetUsername(tweetUsername)
+    }
+  }
+
+  useEffect(() => {
+    updateUser()
+  }, )
+ 
+
 
   return (
-    <MyContext.Consumer>
-      {({ renderTweet }) => (
+
         <div>
           <form onSubmit={(e) => e.preventDefault()}>
             <textarea onChange={(e) => setTweetText(e.target.value)} value={tweetText} placeholder="What you have in mind..."></textarea>
-            {tweetText.length >= 140
-              ? <div className='errorMessage'>
-                The tweet can't contain more then 140 chars</div>
-              : ""}
             <div className='buttondiv'>
-              <button disabled={tweetText.length > 140 || 0 ? true : disabledBtn} onClick={() => renderTweet(tweetText, setTweetText, setdisabledBtn)} id="button">Tweet</button>
+              <button onClick={() => createTweet(tweetText, setTweetText, setdisabledBtn)} id="button">Tweet</button>
             </div>
           </form>
-
-          {errorMessage.length > 0 ? <h4>{errorMessage}</h4> : ""}
           {loading ?
             <div className="d-flex justify-content-center">
               <div className="spinner-grow text-primary" role="status">
@@ -34,8 +65,7 @@ function CreateTweet(props) {
             </div>
             : ""}
         </div>
-      )}
-    </MyContext.Consumer>
+
   )
 }
 export default CreateTweet;

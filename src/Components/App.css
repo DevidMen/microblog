@@ -20,8 +20,7 @@ form{
   margin-left: auto;
   padding-right: 15px;
   padding-left: 15px;
-  min-height: 100vh;
-  margin-top: 45px;
+  margin-top: 55px;
 }
 .tweetHeader{
   display: flex;
@@ -49,6 +48,7 @@ form{
   flex-direction: column;
   justify-content: space-between;
   margin-top: 15px;
+  overflow: auto;
 }
 textarea{
       width: 100%;
@@ -67,12 +67,26 @@ textarea{
   background-color: #F5C6CB;
   color: #721C24;
   max-width: fit-content;
-  position: absolute;
-  top: 75%;
+  margin-top: 5px;
+
 }
 .navbar{
   display: flex;
   justify-content: center;
+}
+.navbaraside{
+  margin-left: auto;
+  display: flex;
+  align-items: end;
+}
+.logoutbtn{
+  box-sizing: border-box;
+  border-radius: 4px;
+  background-color: red;
+  border: none;
+  padding: 10px;
+  color: white;
+  margin-right: 5px;
 }
 .navbarUl{
   padding: 10px;
@@ -83,7 +97,8 @@ textarea{
   flex-flow:  nowrap;
   display: flex;
   background-color: #343A40; ;
-  z-index: 9;  
+  z-index: 9; 
+  align-items: center;
 }
   a{
     color: #6C757D;
@@ -122,5 +137,128 @@ textarea{
   a:hover {color: #6C757D;}
   
   a:active {color: #fff !important;}
-  
-  
+
+.buttondivLogin{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.loginbtngoogle{
+background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNMTcuNiA5LjJsLS4xLTEuOEg5djMuNGg0LjhDMTMuNiAxMiAxMyAxMyAxMiAxMy42djIuMmgzYTguOCA4LjggMCAwIDAgMi42LTYuNnoiIGZpbGw9IiM0Mjg1RjQiIGZpbGwtcnVsZT0ibm9uemVybyIvPjxwYXRoIGQ9Ik05IDE4YzIuNCAwIDQuNS0uOCA2LTIuMmwtMy0yLjJhNS40IDUuNCAwIDAgMS04LTIuOUgxVjEzYTkgOSAwIDAgMCA4IDV6IiBmaWxsPSIjMzRBODUzIiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNNCAxMC43YTUuNCA1LjQgMCAwIDEgMC0zLjRWNUgxYTkgOSAwIDAgMCAwIDhsMy0yLjN6IiBmaWxsPSIjRkJCQzA1IiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNOSAzLjZjMS4zIDAgMi41LjQgMy40IDEuM0wxNSAyLjNBOSA5IDAgMCAwIDEgNWwzIDIuNGE1LjQgNS40IDAgMCAxIDUtMy43eiIgZmlsbD0iI0VBNDMzNSIgZmlsbC1ydWxlPSJub256ZXJvIi8+PHBhdGggZD0iTTAgMGgxOHYxOEgweiIvPjwvZz48L3N2Zz4=);
+background-color: white;
+background-repeat: no-repeat;
+background-position: 12px 11px;
+padding: 12px 16px 12px 42px;
+border: none;
+border-radius: 3px;
+box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 1px 1px rgba(0, 0, 0, .25);
+color: #757575;
+font-size: 14px;
+font-weight: 500;
+}
+.loginbtn{
+
+    background-color: white;
+    background-repeat: no-repeat;
+    background-position: 12px 11px;
+    padding: 12px 16px 12px 20px;
+    border: none;
+    border-radius: 3px;
+    box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 1px 1px rgba(0, 0, 0, .25);
+    color: #757575;
+    font-size: 14px;
+    font-weight: 500;
+    }
+
+.divsignin {
+	margin:10% auto 0 auto;
+	padding:30px;
+	width:400px;
+	height:auto;
+	overflow:hidden;
+	border-radius:10px;
+  border: 1px solid;
+  display: flex;
+  flex-direction: column;
+}
+
+
+input {
+	margin:15px 0;
+	padding:15px 10px;
+	width:100%;
+	outline:none;
+	border:1px solid #bbb;
+	border-radius:20px;
+	display:inline-block;
+	-webkit-box-sizing:border-box;
+	   -moz-box-sizing:border-box;
+	        box-sizing:border-box;
+    -webkit-transition:0.2s ease all;
+	   -moz-transition:0.2s ease all;
+	    -ms-transition:0.2s ease all;
+	     -o-transition:0.2s ease all;
+	        transition:0.2s ease all;
+}
+
+input[type=text]:focus,
+input[type="password"]:focus {
+	border-color:cornflowerblue;
+}
+
+input[type=submit] {
+	padding:15px 50px;
+	width:auto;
+	background:#1abc9c;
+	border:none;
+	color:white;
+	cursor:pointer;
+	display:inline-block;
+	clear:right;
+	-webkit-transition:0.2s ease all;
+	   -moz-transition:0.2s ease all;
+	    -ms-transition:0.2s ease all;
+	     -o-transition:0.2s ease all;
+	        transition:0.2s ease all;
+}
+
+input[type=submit]:hover {
+	opacity:0.8;
+}
+
+input[type="submit"]:active {
+	opacity:0.4;
+}
+.profilepicture {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+}
+.avatar{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  margin-right: 10px;
+}
+.buttonupload{
+  box-sizing: border-box;
+  border-radius: 4px;
+  font-size: 16px;
+  resize: none;
+  width: 100px;
+  background-color: #007BFF;
+  border: none;
+  color: white;
+  margin-top: 10px;
+}
+.uploading{
+  border: 1px solid;
+}
+
+.footerprofile{
+  display: flex;
+  justify-content: end;
+  margin-top: 5px;
+}

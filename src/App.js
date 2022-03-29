@@ -9,106 +9,87 @@ import {
 } from "react-router-dom";
 import Profile from './Pages/Profile';
 import Home from './Pages/Home'
-import MyContext from './Components/Mycontext';
-import { v4 as uuidv4 } from "uuid";
+import Login from './Pages/Login';
+import { collection, orderBy, onSnapshot, query, limit, getDocs } from 'firebase/firestore'
+import { db , auth } from './Firebase-config'
+import SignUp from './Pages/SignUp';
+import { signOut } from "firebase/auth";
 
 function App() {
 
-  const [tweetUsername, setTweetUsername] = useState('')
   const [tweetList, setTweetList] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [errorMessage, setErrorMessage] = useState("")
+  const [errorMessage] = useState("")
+  const [isAuth, setIsAuth] = useState(localStorage.getItem('isAuth'))
+  
+  const collectionRef = collection(db, 'twitter')
+  const collectionSorted = query(collectionRef, orderBy("date", "desc"))
 
-
-  const fetchData = async () => {
-    setLoading(false)
-    const response = await fetch(`https://micro-blogging-dot-full-stack-course-services.ew.r.appspot.com/tweet`);
-    const data = await response.json();
-    setTweetList(data.tweets)
-  }
-
-
+ 
   useEffect(() => {
-    fetchData()
+    const unsubscribe =
+      onSnapshot(collectionSorted, (snapshot) =>{
+        setTweetList(snapshot.docs.map((doc) => ({ ...doc.data(), id:doc.id})))
+   
+      })
+    return ()=> {
 
+      unsubscribe()
+    }
+   
   }, [])
+  
 
-  function updateUser(){
-    
-    const tweetUsername = JSON.parse(
-      localStorage.getItem('react-tweet-username')
-    )
-    if (tweetUsername) {
-      setTweetUsername(tweetUsername)
-    }
-  }
+  const signUserOut = () => {
+    signOut(auth).then(() => {
+      localStorage.clear();
+      setIsAuth(false);
+      window.location.pathname = "/login";
+      
+    });
+  };
 
   useEffect(() => {
-    updateUser()
-  }, )
-
-
-
-  async function renderTweet(value, setTweetText, setdisabledBtn) {
-    updateUser()
-    setTweetUsername(tweetUsername)
-    setdisabledBtn(true)
-    setLoading(true)
-
-
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ content: value, userName: tweetUsername, date: date() })
-    };
-    const response = await fetch(`https://micro-blogging-dot-full-stack-course-services.ew.r.appspot.com/tweet`, requestOptions);
-    const data = await response.json();
-    setLoading(false)
-    if (!response.ok) {
-      setErrorMessage(data.message)
+    if(!isAuth && window.location.pathname !== ('/login')){
+          window.location.pathname = ('/login')
     }
-    else {
-      setErrorMessage("")
-    }
-    const newtweet = [{ id: uuidv4(), content: value, userName: tweetUsername, date: date() }].concat(tweetList)
-    setTweetList(newtweet)
-    setLoading(false)
-    setdisabledBtn(false)
-    setTweetText("")
-  }
-  useEffect(() => {
-    setLoading(true)
-    const interval = setInterval(() => fetchData()
-      , 3000)
-    return () => {
-      clearInterval(interval)
-    }
-  }, [])
-
-  function date() {
-    const today = new Date();
-    const date = today.toISOString()
-    return date
-  }
+  },[])
 
 
-
+  const [currentUser, setArrayOfUsers] = useState([])
+    const userCollectionRef = collection(db, "users")
+    useEffect(() => {
+      const getusers = async () => {
+        const data = await getDocs(userCollectionRef);
+        let userArray = []
+        data.forEach((doc) => {
+          userArray.unshift({
+            userName:doc.data().userName,
+            key:doc.data().key
+          })
+        })
+        console.log(userArray)
+        setArrayOfUsers(userArray)
+      };
+      getusers()
+    }, []);
   return (
     <div>
-      <NavBar />
+      <NavBar isAuth={isAuth} setIsAuth={setIsAuth} signUserOut={signUserOut} currentUser={currentUser} />
       <div className='container'>
- 
-        <MyContext.Provider value={{
-          tweetList, renderTweet,setTweetUsername,tweetUsername
-        }}>
+
+
           <Routes>
 
-            <Route path="/" element={<Home loading={loading} errorMessage={errorMessage} />} />
+            <Route path="/login" element={<Login setIsAuth={setIsAuth} currentUser = {currentUser}/>} />
 
-            <Route path="/profile" element={<Profile  />} />
+            <Route path="/signup" element={<SignUp setIsAuth={setIsAuth} currentUser = {currentUser}/>} />
+
+            <Route path='/' element={<Home  errorMessage={errorMessage} currentUser={currentUser} tweetList={tweetList}/>} />
+
+            <Route path="/profile" element={<Profile />} />
 
           </Routes>
-        </MyContext.Provider>
+  
 
       </div>
     </div>
