@@ -5,6 +5,7 @@ import {useReducer,useRef,useState,useEffect} from 'react'
 
 
 
+
 function Home(props) {
 
     const {currentUser,tweetList} = props
@@ -84,7 +85,7 @@ const load = () => {
 
   return (
                     <div className='tweetList'>
-                    <CreateTweet/>
+                  <CreateTweet/>
                         {data.map((element => <TweetList
                         
                             element={element}
@@ -92,12 +93,16 @@ const load = () => {
                            
                           currentUser = {currentUser.find((el) => { return el.key === element.key})}
                         />))}
+                       
                     {loading && <li>Loading...</li>}
 
 {!loading && more && (
   <li ref={setElement} style={{ background: "transparent" }}></li>
 )}
+
                 </div>
+
+
 
     )
 }

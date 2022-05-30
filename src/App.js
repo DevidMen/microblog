@@ -13,6 +13,7 @@ import Login from './Pages/Login';
 import { collection, orderBy, onSnapshot, query, limit, getDocs } from 'firebase/firestore'
 import { db , auth } from './Firebase-config'
 import SignUp from './Pages/SignUp';
+import MyContext from './Components/Mycontext';
 import { signOut } from "firebase/auth";
 
 function App() {
@@ -72,11 +73,16 @@ function App() {
       };
       getusers()
     }, []);
+const [number , setnumber] = useState(2)
+
+
+    
   return (
     <div>
       <NavBar isAuth={isAuth} setIsAuth={setIsAuth} signUserOut={signUserOut} currentUser={currentUser} />
       <div className='container'>
 
+<MyContext.Provider value={{number}}>
 
           <Routes>
 
@@ -90,7 +96,7 @@ function App() {
 
           </Routes>
   
-
+          </MyContext.Provider>
       </div>
     </div>
   )
